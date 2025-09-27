@@ -5,11 +5,12 @@ import {useForm} from 'react-hook-form'
 import {useTranslation} from 'react-i18next'
 import type z from 'zod'
 import {generateSituationText} from '../services/gptService'
-import {useAppDispatch} from '../store'
+import {useAppDispatch, useAppSelector} from '../store'
 import {setSituation} from '../store/formSlice'
 import {situationSchema} from '../utils/validation'
 import ErrorBoundary from './ErrorBoundary'
 import HelpMeWriteButton from './HelpMeWriteButton'
+import StepsNavigator from './StepsNavigator'
 
 type FormValues = z.infer<typeof situationSchema>
 
@@ -19,6 +20,10 @@ export default function SituationForm() {
   const [loadingField, setLoadingField] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
 
+  const defaultValues = useAppSelector(
+    state => state.form.data.situation
+  ) as FormValues
+
   const {
     register,
     handleSubmit,
@@ -26,7 +31,8 @@ export default function SituationForm() {
     formState: {errors},
     watch
   } = useForm<FormValues>({
-    resolver: zodResolver(situationSchema)
+    resolver: zodResolver(situationSchema),
+    defaultValues
   })
 
   const onSubmit = async (data: FormValues) => {
@@ -120,6 +126,9 @@ export default function SituationForm() {
           )}
         </Form.Item>
         {error && <div style={{color: 'red', marginBottom: 8}}>{error}</div>}
+        <Form.Item>
+          <StepsNavigator />
+        </Form.Item>
       </Form>
     </ErrorBoundary>
   )

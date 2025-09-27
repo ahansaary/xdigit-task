@@ -4,18 +4,24 @@ import dayjs from 'dayjs'
 import {Controller, useForm} from 'react-hook-form'
 import {useTranslation} from 'react-i18next'
 import type z from 'zod'
-import {useAppDispatch} from '../store'
+import {useAppDispatch, useAppSelector} from '../store'
 import {nextStep, setPersonalInfo} from '../store/formSlice'
 import {personalInfoSchema} from '../utils/validation'
 import ErrorBoundary from './ErrorBoundary'
+import StepsNavigator from './StepsNavigator'
 
 const {Option} = Select
 
 type FormValues = z.infer<typeof personalInfoSchema>
 
 export default function PersonalInfoForm() {
-  const {t} = useTranslation()
   const dispatch = useAppDispatch()
+  const {t} = useTranslation()
+
+  const defaultValues = useAppSelector(
+    state => state.form.data.personalInfo
+  ) as FormValues
+
   const {
     control,
     handleSubmit,
@@ -23,7 +29,7 @@ export default function PersonalInfoForm() {
     formState: {errors}
   } = useForm<FormValues>({
     resolver: zodResolver(personalInfoSchema),
-    mode: 'onChange'
+    defaultValues
   })
 
   const {dateOfBirth} = watch()
@@ -117,9 +123,9 @@ export default function PersonalInfoForm() {
                 aria-label={t('personalInfo.gender')}
                 aria-invalid={!!errors.gender}
                 aria-describedby="gender-error">
-                <Option value="male">{t('personalInfo.male')}</Option>
-                <Option value="female">{t('personalInfo.female')}</Option>
-                <Option value="other">{t('personalInfo.other')}</Option>
+                <Option value="male">{t('personalInfo.genderMale')}</Option>
+                <Option value="female">{t('personalInfo.genderFemale')}</Option>
+                <Option value="other">{t('personalInfo.genderOther')}</Option>
               </Select>
             )}
           />
@@ -237,6 +243,9 @@ export default function PersonalInfoForm() {
               />
             )}
           />
+        </Form.Item>
+        <Form.Item>
+          <StepsNavigator />
         </Form.Item>
       </Form>
     </ErrorBoundary>

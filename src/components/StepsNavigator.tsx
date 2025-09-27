@@ -2,14 +2,13 @@ import {Button, Space} from 'antd'
 import {useTranslation} from 'react-i18next'
 import useSteps from '../hooks/steps'
 import {useAppDispatch} from '../store'
-import {nextStep, prevStep} from '../store/formSlice'
+import {prevStep} from '../store/formSlice'
 
 export default function StepsNavigator() {
   const {steps, current} = useSteps()
   const dispatch = useAppDispatch()
   const {t} = useTranslation()
 
-  const next = () => dispatch(nextStep())
   const prev = () => dispatch(prevStep())
 
   return (
@@ -18,11 +17,13 @@ export default function StepsNavigator() {
         {t('buttons.previous')}
       </Button>
       {current < steps.length - 1 ? (
-        <Button type="primary" onClick={next}>
+        <Button type="primary" htmlType="submit">
           {t('buttons.next')}
         </Button>
       ) : (
-        <Button type="primary">{t('buttons.saveAndExit')}</Button>
+        <Button type="primary" htmlType="submit">
+          {t('buttons.saveAndExit')}
+        </Button>
       )}
     </Space>
   )

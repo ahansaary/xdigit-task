@@ -3,18 +3,23 @@ import {Form, InputNumber, Select} from 'antd'
 import {Controller, useForm} from 'react-hook-form'
 import {useTranslation} from 'react-i18next'
 import type z from 'zod'
-import {useAppDispatch} from '../store'
+import {useAppDispatch, useAppSelector} from '../store'
 import {nextStep, setFamilyInfo} from '../store/formSlice'
 import {familyInfoSchema} from '../utils/validation'
 import ErrorBoundary from './ErrorBoundary'
+import StepsNavigator from './StepsNavigator'
 
 const {Option} = Select
 
 type FormValues = z.infer<typeof familyInfoSchema>
 
 export default function FamilyInfoForm() {
-  const {t} = useTranslation()
   const dispatch = useAppDispatch()
+  const {t} = useTranslation()
+
+  const defaultValues = useAppSelector(
+    state => state.form.data.familyInfo
+  ) as FormValues
 
   const {
     control,
@@ -22,7 +27,7 @@ export default function FamilyInfoForm() {
     formState: {errors}
   } = useForm<FormValues>({
     resolver: zodResolver(familyInfoSchema),
-    mode: 'onChange'
+    defaultValues
   })
 
   const onSubmit = (data: FormValues) => {
@@ -172,6 +177,9 @@ export default function FamilyInfoForm() {
               </Select>
             )}
           />
+        </Form.Item>
+        <Form.Item>
+          <StepsNavigator />
         </Form.Item>
       </Form>
     </ErrorBoundary>

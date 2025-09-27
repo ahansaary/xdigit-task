@@ -3,7 +3,6 @@ import {useTranslation} from 'react-i18next'
 import useSteps from '../hooks/steps'
 import ErrorBoundary from './ErrorBoundary'
 import ProgressBar from './ProgressBar'
-import StepsNavigator from './StepsNavigator'
 
 export default function FormWizard() {
   const {currentStep} = useSteps()
@@ -20,7 +19,6 @@ export default function FormWizard() {
         <Card>
           <ProgressBar />
           <div className="my-6">{currentStep.content}</div>
-          <StepsNavigator />
         </Card>
       </div>
     </ErrorBoundary>
