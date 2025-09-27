@@ -3,21 +3,18 @@ import {Form, Input, Spin, message} from 'antd'
 import {useState} from 'react'
 import {useForm} from 'react-hook-form'
 import {useTranslation} from 'react-i18next'
-import {useDispatch} from 'react-redux'
+import type z from 'zod'
 import {generateSituationText} from '../../services/gptService'
-import {saveSituation} from '../../store/formSlice'
+import {useAppDispatch} from '../../store'
+import {setSituation} from '../../store/formSlice'
 import {situationSchema} from '../../utils/validation'
 import ErrorBoundary from '../common/ErrorBoundary'
 import HelpMeWriteButton from '../common/HelpMeWriteButton'
 
-export type SituationFormValues = {
-  financialSituation: string
-  employmentCircumstances: string
-  reasonForApplying: string
-}
+export type SituationFormValues = z.infer<typeof situationSchema>
 
 const SituationForm = () => {
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   const {t} = useTranslation()
   const [loadingField, setLoadingField] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
@@ -35,7 +32,7 @@ const SituationForm = () => {
   const onSubmit = async (data: SituationFormValues) => {
     try {
       setError(null)
-      dispatch(saveSituation(data))
+      dispatch(setSituation(data))
       message.success(t('messages.situationSaved'))
     } catch (err) {
       setError(t('messages.apiError'))

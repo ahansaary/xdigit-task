@@ -3,24 +3,19 @@ import {Form, InputNumber, Select} from 'antd'
 import React from 'react'
 import {Controller, useForm} from 'react-hook-form'
 import {useTranslation} from 'react-i18next'
-import {useDispatch} from 'react-redux'
-import {saveFamilyInfo} from '../../store/formSlice'
+import type z from 'zod'
+import {useAppDispatch} from '../../store'
+import {setFamilyInfo} from '../../store/formSlice'
 import {familyInfoSchema} from '../../utils/validation'
 import ErrorBoundary from '../common/ErrorBoundary'
 
 const {Option} = Select
 
-export type FamilyInfoFormValues = {
-  maritalStatus: string
-  dependents: number
-  employmentStatus: string
-  monthlyIncome: number
-  housingStatus: string
-}
+export type FamilyInfoFormValues = z.infer<typeof familyInfoSchema>
 
 const FamilyInfoForm: React.FC<{onNext: () => void}> = ({onNext}) => {
   const {t} = useTranslation()
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
 
   const {
     control,
@@ -32,7 +27,7 @@ const FamilyInfoForm: React.FC<{onNext: () => void}> = ({onNext}) => {
   })
 
   const onSubmit = (data: FamilyInfoFormValues) => {
-    dispatch(saveFamilyInfo(data))
+    dispatch(setFamilyInfo(data))
     onNext()
   }
 

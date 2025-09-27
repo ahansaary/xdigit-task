@@ -4,29 +4,19 @@ import dayjs from 'dayjs'
 import React from 'react'
 import {Controller, useForm} from 'react-hook-form'
 import {useTranslation} from 'react-i18next'
-import {useDispatch} from 'react-redux'
-import {savePersonalInfo} from '../../store/formSlice'
+import type z from 'zod'
+import {useAppDispatch} from '../../store'
+import {setPersonalInfo} from '../../store/formSlice'
 import {personalInfoSchema} from '../../utils/validation'
 import ErrorBoundary from '../common/ErrorBoundary'
 
 const {Option} = Select
 
-export type PersonalInfoFormValues = {
-  fullName: string
-  nationalId: string
-  dateOfBirth: string
-  gender: string
-  address: string
-  city: string
-  state: string
-  country: string
-  phoneNumber: string
-  email: string
-}
+export type PersonalInfoFormValues = z.infer<typeof personalInfoSchema>
 
 const PersonalInfoForm: React.FC<{onNext: () => void}> = ({onNext}) => {
   const {t} = useTranslation()
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   const {
     control,
     handleSubmit,
@@ -40,7 +30,7 @@ const PersonalInfoForm: React.FC<{onNext: () => void}> = ({onNext}) => {
   const {dateOfBirth} = watch()
 
   const onSubmit = (data: PersonalInfoFormValues) => {
-    dispatch(savePersonalInfo(data))
+    dispatch(setPersonalInfo(data))
     onNext()
   }
 
