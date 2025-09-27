@@ -7,6 +7,7 @@ import {useTranslation} from 'react-i18next'
 import {useDispatch} from 'react-redux'
 import {savePersonalInfo} from '../../store/formSlice'
 import {personalInfoSchema} from '../../utils/validation'
+import ErrorBoundary from '../common/ErrorBoundary'
 
 const {Option} = Select
 
@@ -44,124 +45,212 @@ const PersonalInfoForm: React.FC<{onNext: () => void}> = ({onNext}) => {
   }
 
   return (
-    <Form layout="vertical" onFinish={handleSubmit(onSubmit)}>
-      <Form.Item
-        label={t('personalInfo.fullName')}
-        validateStatus={errors.fullName ? 'error' : ''}
-        help={errors.fullName?.message}>
-        <Controller
-          name="fullName"
-          control={control}
-          render={({field}) => <Input {...field} />}
-        />
-      </Form.Item>
-      <Form.Item
-        label={t('personalInfo.nationalId')}
-        validateStatus={errors.nationalId ? 'error' : ''}
-        help={errors.nationalId?.message}>
-        <Controller
-          name="nationalId"
-          control={control}
-          render={({field}) => <Input {...field} />}
-        />
-      </Form.Item>
-      <Form.Item
-        label={t('personalInfo.dateOfBirth')}
-        validateStatus={errors.dateOfBirth ? 'error' : ''}
-        help={errors.dateOfBirth?.message}>
-        <Controller
-          name="dateOfBirth"
-          control={control}
-          render={({field}) => (
-            <DatePicker
-              {...field}
-              style={{width: '100%'}}
-              format="YYYY-MM-DD"
-              value={dateOfBirth ? dayjs(dateOfBirth, 'YYYY-MM-DD') : undefined}
-              onChange={date => {
-                field.onChange(date ? dayjs(date).format('YYYY-MM-DD') : '')
-              }}
-            />
-          )}
-        />
-      </Form.Item>
-      <Form.Item
-        label={t('personalInfo.gender')}
-        validateStatus={errors.gender ? 'error' : ''}
-        help={errors.gender?.message}>
-        <Controller
-          name="gender"
-          control={control}
-          render={({field}) => (
-            <Select {...field} style={{width: '100%'}}>
-              <Option value="male">{t('personalInfo.male')}</Option>
-              <Option value="female">{t('personalInfo.female')}</Option>
-              <Option value="other">{t('personalInfo.other')}</Option>
-            </Select>
-          )}
-        />
-      </Form.Item>
-      <Form.Item
-        label={t('personalInfo.address')}
-        validateStatus={errors.address ? 'error' : ''}
-        help={errors.address?.message}>
-        <Controller
-          name="address"
-          control={control}
-          render={({field}) => <Input {...field} />}
-        />
-      </Form.Item>
-      <Form.Item
-        label={t('personalInfo.city')}
-        validateStatus={errors.city ? 'error' : ''}
-        help={errors.city?.message}>
-        <Controller
-          name="city"
-          control={control}
-          render={({field}) => <Input {...field} />}
-        />
-      </Form.Item>
-      <Form.Item
-        label={t('personalInfo.state')}
-        validateStatus={errors.state ? 'error' : ''}
-        help={errors.state?.message}>
-        <Controller
-          name="state"
-          control={control}
-          render={({field}) => <Input {...field} />}
-        />
-      </Form.Item>
-      <Form.Item
-        label={t('personalInfo.country')}
-        validateStatus={errors.country ? 'error' : ''}
-        help={errors.country?.message}>
-        <Controller
-          name="country"
-          control={control}
-          render={({field}) => <Input {...field} />}
-        />
-      </Form.Item>
-      <Form.Item
-        label={t('personalInfo.phoneNumber')}
-        validateStatus={errors.phoneNumber ? 'error' : ''}
-        help={errors.phoneNumber?.message}>
-        <Controller
-          name="phoneNumber"
-          control={control}
-          render={({field}) => <Input {...field} />}
-        />
-      </Form.Item>
-      <Form.Item
-        label={t('personalInfo.email')}
-        validateStatus={errors.email ? 'error' : ''}
-        help={errors.email?.message}>
-        <Controller
-          name="email"
-          control={control}
-          render={({field}) => <Input {...field} />}
-        />
-      </Form.Item>
-    </Form>
+    <ErrorBoundary>
+      <Form layout="vertical" onFinish={handleSubmit(onSubmit)}>
+        <Form.Item
+          label={t('personalInfo.fullName')}
+          validateStatus={errors.fullName ? 'error' : ''}
+          help={errors.fullName?.message}
+          htmlFor="fullName">
+          <Controller
+            name="fullName"
+            control={control}
+            render={({field}) => (
+              <Input
+                {...field}
+                id="fullName"
+                aria-label={t('personalInfo.fullName')}
+                aria-invalid={!!errors.fullName}
+                aria-describedby="fullName-error"
+              />
+            )}
+          />
+        </Form.Item>
+        <Form.Item
+          label={t('personalInfo.nationalId')}
+          validateStatus={errors.nationalId ? 'error' : ''}
+          help={errors.nationalId?.message}
+          htmlFor="nationalId">
+          <Controller
+            name="nationalId"
+            control={control}
+            render={({field}) => (
+              <Input
+                {...field}
+                id="nationalId"
+                aria-label={t('personalInfo.nationalId')}
+                aria-invalid={!!errors.nationalId}
+                aria-describedby="nationalId-error"
+              />
+            )}
+          />
+        </Form.Item>
+        <Form.Item
+          label={t('personalInfo.dateOfBirth')}
+          validateStatus={errors.dateOfBirth ? 'error' : ''}
+          help={errors.dateOfBirth?.message}
+          htmlFor="dateOfBirth">
+          <Controller
+            name="dateOfBirth"
+            control={control}
+            render={({field}) => (
+              <DatePicker
+                {...field}
+                id="dateOfBirth"
+                style={{width: '100%'}}
+                format="YYYY-MM-DD"
+                value={
+                  dateOfBirth ? dayjs(dateOfBirth, 'YYYY-MM-DD') : undefined
+                }
+                onChange={date => {
+                  field.onChange(date ? dayjs(date).format('YYYY-MM-DD') : '')
+                }}
+                aria-label={t('personalInfo.dateOfBirth')}
+                aria-invalid={!!errors.dateOfBirth}
+                aria-describedby="dateOfBirth-error"
+              />
+            )}
+          />
+        </Form.Item>
+        <Form.Item
+          label={t('personalInfo.gender')}
+          validateStatus={errors.gender ? 'error' : ''}
+          help={errors.gender?.message}
+          htmlFor="gender">
+          <Controller
+            name="gender"
+            control={control}
+            render={({field}) => (
+              <Select
+                {...field}
+                id="gender"
+                style={{width: '100%'}}
+                aria-label={t('personalInfo.gender')}
+                aria-invalid={!!errors.gender}
+                aria-describedby="gender-error">
+                <Option value="male">{t('personalInfo.male')}</Option>
+                <Option value="female">{t('personalInfo.female')}</Option>
+                <Option value="other">{t('personalInfo.other')}</Option>
+              </Select>
+            )}
+          />
+        </Form.Item>
+        <Form.Item
+          label={t('personalInfo.address')}
+          validateStatus={errors.address ? 'error' : ''}
+          help={errors.address?.message}
+          htmlFor="address">
+          <Controller
+            name="address"
+            control={control}
+            render={({field}) => (
+              <Input
+                {...field}
+                id="address"
+                aria-label={t('personalInfo.address')}
+                aria-invalid={!!errors.address}
+                aria-describedby="address-error"
+              />
+            )}
+          />
+        </Form.Item>
+        <Form.Item
+          label={t('personalInfo.city')}
+          validateStatus={errors.city ? 'error' : ''}
+          help={errors.city?.message}
+          htmlFor="city">
+          <Controller
+            name="city"
+            control={control}
+            render={({field}) => (
+              <Input
+                {...field}
+                id="city"
+                aria-label={t('personalInfo.city')}
+                aria-invalid={!!errors.city}
+                aria-describedby="city-error"
+              />
+            )}
+          />
+        </Form.Item>
+        <Form.Item
+          label={t('personalInfo.state')}
+          validateStatus={errors.state ? 'error' : ''}
+          help={errors.state?.message}
+          htmlFor="state">
+          <Controller
+            name="state"
+            control={control}
+            render={({field}) => (
+              <Input
+                {...field}
+                id="state"
+                aria-label={t('personalInfo.state')}
+                aria-invalid={!!errors.state}
+                aria-describedby="state-error"
+              />
+            )}
+          />
+        </Form.Item>
+        <Form.Item
+          label={t('personalInfo.country')}
+          validateStatus={errors.country ? 'error' : ''}
+          help={errors.country?.message}
+          htmlFor="country">
+          <Controller
+            name="country"
+            control={control}
+            render={({field}) => (
+              <Input
+                {...field}
+                id="country"
+                aria-label={t('personalInfo.country')}
+                aria-invalid={!!errors.country}
+                aria-describedby="country-error"
+              />
+            )}
+          />
+        </Form.Item>
+        <Form.Item
+          label={t('personalInfo.phoneNumber')}
+          validateStatus={errors.phoneNumber ? 'error' : ''}
+          help={errors.phoneNumber?.message}
+          htmlFor="phoneNumber">
+          <Controller
+            name="phoneNumber"
+            control={control}
+            render={({field}) => (
+              <Input
+                {...field}
+                id="phoneNumber"
+                aria-label={t('personalInfo.phoneNumber')}
+                aria-invalid={!!errors.phoneNumber}
+                aria-describedby="phoneNumber-error"
+              />
+            )}
+          />
+        </Form.Item>
+        <Form.Item
+          label={t('personalInfo.email')}
+          validateStatus={errors.email ? 'error' : ''}
+          help={errors.email?.message}
+          htmlFor="email">
+          <Controller
+            name="email"
+            control={control}
+            render={({field}) => (
+              <Input
+                {...field}
+                id="email"
+                aria-label={t('personalInfo.email')}
+                aria-invalid={!!errors.email}
+                aria-describedby="email-error"
+              />
+            )}
+          />
+        </Form.Item>
+      </Form>
+    </ErrorBoundary>
   )
 }
 

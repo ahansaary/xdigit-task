@@ -5,6 +5,7 @@ import ProgressBar from '../ProgressBar'
 import PersonalInfoForm from '../Step1'
 import FamilyInfoForm from '../Step2'
 import SituationForm from '../Step3'
+import ErrorBoundary from '../common/ErrorBoundary'
 
 const FormWizard = () => {
   const [current, setCurrent] = useState(0)
@@ -29,31 +30,33 @@ const FormWizard = () => {
     },
     {
       title: t('situation.title'),
-      content: <SituationForm onNext={saveAndExit} />
+      content: <SituationForm />
     }
   ]
 
   return (
-    <div className="w-full flex justify-center py-8">
-      <Card>
-        <ProgressBar current={current} steps={steps.map(s => t(s.title))} />
-        <div className="my-6">{steps[current].content}</div>
-        <Space>
-          <Button disabled={current === 0} onClick={prev}>
-            {t('buttons.previous')}
-          </Button>
-          {current < steps.length - 1 ? (
-            <Button type="primary" onClick={next}>
-              {t('buttons.next')}
+    <ErrorBoundary>
+      <div className="w-full flex justify-center py-8">
+        <Card>
+          <ProgressBar current={current} steps={steps.map(s => t(s.title))} />
+          <div className="my-6">{steps[current].content}</div>
+          <Space>
+            <Button disabled={current === 0} onClick={prev}>
+              {t('buttons.previous')}
             </Button>
-          ) : (
-            <Button type="primary" onClick={saveAndExit}>
-              {t('buttons.saveAndExit')}
-            </Button>
-          )}
-        </Space>
-      </Card>
-    </div>
+            {current < steps.length - 1 ? (
+              <Button type="primary" onClick={next}>
+                {t('buttons.next')}
+              </Button>
+            ) : (
+              <Button type="primary" onClick={saveAndExit}>
+                {t('buttons.saveAndExit')}
+              </Button>
+            )}
+          </Space>
+        </Card>
+      </div>
+    </ErrorBoundary>
   )
 }
 

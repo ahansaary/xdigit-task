@@ -1,6 +1,10 @@
-import axios from 'axios'
-
-export const getGptSuggestion = async prompt => {
-  // TODO: Integrate OpenAI GPT API
-  return axios.post('/api/gpt', {prompt})
+// src/services/gptService.ts
+export const generateSituationText = async (
+  prompt: string
+): Promise<string> => {
+  return new Promise(resolve => {
+    setTimeout(() => {
+      resolve(`AI-generated suggestion for: ${prompt}`)
+    }, 1500)
+  })
 }
