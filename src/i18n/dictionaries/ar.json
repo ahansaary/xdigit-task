@@ -1,0 +1,60 @@
+{
+  "personalInfo": {
+    "title": "المعلومات الشخصية",
+    "fullName": "الاسم الكامل",
+    "nationalId": "الرقم القومي",
+    "dateOfBirth": "تاريخ الميلاد",
+    "gender": "الجنس",
+    "genderMale": "ذكر",
+    "genderFemale": "أنثى",
+    "genderOther": "آخر",
+    "address": "العنوان",
+    "city": "المدينة",
+    "state": "المحافظة",
+    "country": "الدولة",
+    "phoneNumber": "رقم الهاتف",
+    "email": "البريد الإلكتروني"
+  },
+  "familyInfo": {
+    "title": "معلومات الأسرة والوضع المالي",
+    "maritalStatus": "الحالة الاجتماعية",
+    "maritalStatusSingle": "أعزب",
+    "maritalStatusMarried": "متزوج",
+    "maritalStatusDivorced": "مطلق",
+    "maritalStatusWidowed": "أرمل",
+    "dependents": "عدد المعالين",
+    "employmentStatus": "حالة العمل",
+    "employmentStatusEmployed": "موظف",
+    "employmentStatusUnemployed": "عاطل",
+    "employmentStatusStudent": "طالب",
+    "employmentStatusRetired": "متقاعد",
+    "monthlyIncome": "الدخل الشهري",
+    "housingStatus": "حالة السكن",
+    "housingStatusOwn": "ملك شخصي",
+    "housingStatusRent": "إيجار",
+    "housingStatusFamily": "سكن عائلي",
+    "housingStatusOther": "آخر"
+  },
+  "situation": {
+    "title": "وصف الحالة",
+    "financialSituation": "الوضع المالي الحالي",
+    "employmentCircumstances": "ظروف العمل",
+    "reasonForApplying": "سبب التقديم"
+  },
+  "buttons": {
+    "next": "التالي",
+    "previous": "السابق",
+    "submit": "إرسال",
+    "saveAndExit": "حفظ وخروج",
+    "helpMeWrite": "ساعدني في الكتابة"
+  },
+  "validation": {
+    "required": "هذا الحقل مطلوب",
+    "invalidEmail": "البريد الإلكتروني غير صالح",
+    "invalidPhone": "رقم الهاتف غير صالح",
+    "invalidNationalId": "الرقم القومي غير صالح"
+  },
+  "messages": {
+    "saveAndExit": "تم حفظ تقدمك. يمكنك المتابعة لاحقًا."
+  }
+}

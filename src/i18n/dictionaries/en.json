@@ -1,0 +1,60 @@
+{
+  "personalInfo": {
+    "title": "Personal Information",
+    "fullName": "Full Name",
+    "nationalId": "National ID",
+    "dateOfBirth": "Date of Birth",
+    "gender": "Gender",
+    "genderMale": "Male",
+    "genderFemale": "Female",
+    "genderOther": "Other",
+    "address": "Address",
+    "city": "City",
+    "state": "State",
+    "country": "Country",
+    "phoneNumber": "Phone Number",
+    "email": "Email"
+  },
+  "familyInfo": {
+    "title": "Family & Financial Info",
+    "maritalStatus": "Marital Status",
+    "maritalStatusSingle": "Single",
+    "maritalStatusMarried": "Married",
+    "maritalStatusDivorced": "Divorced",
+    "maritalStatusWidowed": "Widowed",
+    "dependents": "Number of Dependents",
+    "employmentStatus": "Employment Status",
+    "employmentStatusEmployed": "Employed",
+    "employmentStatusUnemployed": "Unemployed",
+    "employmentStatusStudent": "Student",
+    "employmentStatusRetired": "Retired",
+    "monthlyIncome": "Monthly Income",
+    "housingStatus": "Housing Status",
+    "housingStatusOwn": "Own",
+    "housingStatusRent": "Rent",
+    "housingStatusFamily": "Family",
+    "housingStatusOther": "Other"
+  },
+  "situation": {
+    "title": "Situation Descriptions",
+    "financialSituation": "Current Financial Situation",
+    "employmentCircumstances": "Employment Circumstances",
+    "reasonForApplying": "Reason for Applying"
+  },
+  "buttons": {
+    "next": "Next",
+    "previous": "Previous",
+    "submit": "Submit",
+    "saveAndExit": "Save & Exit",
+    "helpMeWrite": "Help Me Write"
+  },
+  "validation": {
+    "required": "This field is required",
+    "invalidEmail": "Invalid email address",
+    "invalidPhone": "Invalid phone number",
+    "invalidNationalId": "Invalid National ID"
+  },
+  "messages": {
+    "saveAndExit": "Your progress has been saved. You can continue later."
+  }
+}
