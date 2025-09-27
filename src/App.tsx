@@ -1,12 +1,12 @@
 import {I18nextProvider} from 'react-i18next'
 import {Provider} from 'react-redux'
 import {PersistGate} from 'redux-persist/integration/react'
-import ErrorBoundary from './components/common/ErrorBoundary'
+import ErrorBoundary from './components/ErrorBoundary'
 import FormWizard from './components/FormWizard'
 import i18n from './i18n'
 import {persistor, store} from './store'
 
-const App = () => {
+export default function App() {
   return (
     <ErrorBoundary>
       <Provider store={store}>
@@ -19,5 +19,3 @@ const App = () => {
     </ErrorBoundary>
   )
 }
-
-export default App

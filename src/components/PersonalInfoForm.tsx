@@ -1,20 +1,19 @@
 import {zodResolver} from '@hookform/resolvers/zod'
 import {DatePicker, Form, Input, Select} from 'antd'
 import dayjs from 'dayjs'
-import React from 'react'
 import {Controller, useForm} from 'react-hook-form'
 import {useTranslation} from 'react-i18next'
 import type z from 'zod'
-import {useAppDispatch} from '../../store'
-import {setPersonalInfo} from '../../store/formSlice'
-import {personalInfoSchema} from '../../utils/validation'
-import ErrorBoundary from '../common/ErrorBoundary'
+import {useAppDispatch} from '../store'
+import {nextStep, setPersonalInfo} from '../store/formSlice'
+import {personalInfoSchema} from '../utils/validation'
+import ErrorBoundary from './ErrorBoundary'
 
 const {Option} = Select
 
-export type PersonalInfoFormValues = z.infer<typeof personalInfoSchema>
+type FormValues = z.infer<typeof personalInfoSchema>
 
-const PersonalInfoForm: React.FC<{onNext: () => void}> = ({onNext}) => {
+export default function PersonalInfoForm() {
   const {t} = useTranslation()
   const dispatch = useAppDispatch()
   const {
@@ -22,16 +21,16 @@ const PersonalInfoForm: React.FC<{onNext: () => void}> = ({onNext}) => {
     handleSubmit,
     watch,
     formState: {errors}
-  } = useForm<PersonalInfoFormValues>({
+  } = useForm<FormValues>({
     resolver: zodResolver(personalInfoSchema),
     mode: 'onChange'
   })
 
   const {dateOfBirth} = watch()
 
-  const onSubmit = (data: PersonalInfoFormValues) => {
+  const onSubmit = (data: FormValues) => {
     dispatch(setPersonalInfo(data))
-    onNext()
+    dispatch(nextStep())
   }
 
   return (
@@ -243,5 +242,3 @@ const PersonalInfoForm: React.FC<{onNext: () => void}> = ({onNext}) => {
     </ErrorBoundary>
   )
 }
-
-export default PersonalInfoForm

@@ -4,16 +4,16 @@ import {useState} from 'react'
 import {useForm} from 'react-hook-form'
 import {useTranslation} from 'react-i18next'
 import type z from 'zod'
-import {generateSituationText} from '../../services/gptService'
-import {useAppDispatch} from '../../store'
-import {setSituation} from '../../store/formSlice'
-import {situationSchema} from '../../utils/validation'
-import ErrorBoundary from '../common/ErrorBoundary'
-import HelpMeWriteButton from '../common/HelpMeWriteButton'
+import {generateSituationText} from '../services/gptService'
+import {useAppDispatch} from '../store'
+import {setSituation} from '../store/formSlice'
+import {situationSchema} from '../utils/validation'
+import ErrorBoundary from './ErrorBoundary'
+import HelpMeWriteButton from './HelpMeWriteButton'
 
-export type SituationFormValues = z.infer<typeof situationSchema>
+type FormValues = z.infer<typeof situationSchema>
 
-const SituationForm = () => {
+export default function SituationForm() {
   const dispatch = useAppDispatch()
   const {t} = useTranslation()
   const [loadingField, setLoadingField] = useState<string | null>(null)
@@ -25,11 +25,11 @@ const SituationForm = () => {
     setValue,
     formState: {errors},
     watch
-  } = useForm<SituationFormValues>({
+  } = useForm<FormValues>({
     resolver: zodResolver(situationSchema)
   })
 
-  const onSubmit = async (data: SituationFormValues) => {
+  const onSubmit = async (data: FormValues) => {
     try {
       setError(null)
       dispatch(setSituation(data))
@@ -39,7 +39,7 @@ const SituationForm = () => {
     }
   }
 
-  const handleHelpMeWrite = async (field: keyof SituationFormValues) => {
+  const handleHelpMeWrite = async (field: keyof FormValues) => {
     setLoadingField(field)
     setError(null)
     try {
@@ -124,5 +124,3 @@ const SituationForm = () => {
     </ErrorBoundary>
   )
 }
-
-export default SituationForm

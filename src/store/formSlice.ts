@@ -45,10 +45,18 @@ const initialState: FormState = {
   }
 }
 
+const numberOfSteps = 3
+
 const formSlice = createSlice({
   name: 'form',
   initialState,
   reducers: {
+    nextStep(state) {
+      state.step = Math.min(state.step + 1, numberOfSteps - 1)
+    },
+    prevStep(state) {
+      state.step = Math.max(state.step - 1, 0)
+    },
     setStep(state, action: PayloadAction<number>) {
       state.step = action.payload
     },
@@ -74,6 +82,8 @@ const formSlice = createSlice({
 })
 
 export const {
+  nextStep,
+  prevStep,
   setStep,
   setPersonalInfo,
   setFamilyInfo,

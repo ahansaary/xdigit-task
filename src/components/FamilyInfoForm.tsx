@@ -1,19 +1,18 @@
 import {zodResolver} from '@hookform/resolvers/zod'
 import {Form, InputNumber, Select} from 'antd'
-import React from 'react'
 import {Controller, useForm} from 'react-hook-form'
 import {useTranslation} from 'react-i18next'
 import type z from 'zod'
-import {useAppDispatch} from '../../store'
-import {setFamilyInfo} from '../../store/formSlice'
-import {familyInfoSchema} from '../../utils/validation'
-import ErrorBoundary from '../common/ErrorBoundary'
+import {useAppDispatch} from '../store'
+import {nextStep, setFamilyInfo} from '../store/formSlice'
+import {familyInfoSchema} from '../utils/validation'
+import ErrorBoundary from './ErrorBoundary'
 
 const {Option} = Select
 
-export type FamilyInfoFormValues = z.infer<typeof familyInfoSchema>
+type FormValues = z.infer<typeof familyInfoSchema>
 
-const FamilyInfoForm: React.FC<{onNext: () => void}> = ({onNext}) => {
+export default function FamilyInfoForm() {
   const {t} = useTranslation()
   const dispatch = useAppDispatch()
 
@@ -21,14 +20,14 @@ const FamilyInfoForm: React.FC<{onNext: () => void}> = ({onNext}) => {
     control,
     handleSubmit,
     formState: {errors}
-  } = useForm<FamilyInfoFormValues>({
+  } = useForm<FormValues>({
     resolver: zodResolver(familyInfoSchema),
     mode: 'onChange'
   })
 
-  const onSubmit = (data: FamilyInfoFormValues) => {
+  const onSubmit = (data: FormValues) => {
     dispatch(setFamilyInfo(data))
-    onNext()
+    dispatch(nextStep())
   }
 
   return (
@@ -178,5 +177,3 @@ const FamilyInfoForm: React.FC<{onNext: () => void}> = ({onNext}) => {
     </ErrorBoundary>
   )
 }
-
-export default FamilyInfoForm
