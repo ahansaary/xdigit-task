@@ -6,12 +6,7 @@ import ProgressBar from './ProgressBar'
 
 export default function FormWizard() {
   const {currentStep} = useSteps()
-  const {t} = useTranslation()
-
-  const saveAndExit = () => {
-    // TODO: Implement save and exit logic (e.g., persist state, redirect, show message)
-    alert(t('messages.saveAndExit'))
-  }
+  const {} = useTranslation()
 
   return (
     <ErrorBoundary>

@@ -101,8 +101,7 @@ jest.mock('antd', () => {
 })
 
 // Helper to render with providers
-function renderWithProviders(ui: React.ReactElement, initialState = {}) {
-  // Only use Providers, do not wrap with another Provider
+function renderWithProviders(ui: React.ReactElement) {
   return render(<Providers>{ui}</Providers>)
 }
 

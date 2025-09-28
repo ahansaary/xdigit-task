@@ -1,6 +1,6 @@
 // src/services/api.ts
 export const submitForm = async (
-  data: any
+  _data: any
 ): Promise<{success: boolean; message: string}> => {
   return new Promise(resolve => {
     setTimeout(() => {

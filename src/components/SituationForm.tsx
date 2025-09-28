@@ -19,7 +19,7 @@ export default function SituationForm() {
   const {t} = useTranslation()
   const [loadingField, setLoadingField] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
-  const [suggestion, setSuggestion] = useState<string>('')
+  const [, setSuggestion] = useState<string>('')
   const [modalOpen, setModalOpen] = useState<boolean>(false)
   const [modalField, setModalField] = useState<keyof FormValues | null>(null)
   const [editValue, setEditValue] = useState<string>('')
