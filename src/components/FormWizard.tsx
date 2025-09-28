@@ -18,7 +18,9 @@ export default function FormWizard() {
       <div className="w-full flex justify-center py-8">
         <Card>
           <ProgressBar />
-          <div className="my-6">{currentStep.content}</div>
+          <div className="my-6">
+            {currentStep ? currentStep.content : <div>Step not found.</div>}
+          </div>
         </Card>
       </div>
     </ErrorBoundary>
