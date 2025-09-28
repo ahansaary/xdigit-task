@@ -23,8 +23,7 @@ export default function useSteps() {
     }
   ]
 
-  const safeCurrent = Math.max(0, Math.min(current, steps.length - 1));
-  const currentStep = steps[safeCurrent];
+  const currentStep = steps[current]
 
   return {steps, current, currentStep}
 }

@@ -1,73 +1,53 @@
-# React + TypeScript + Vite
+# xdigit.ai Form Wizard
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A multi-step form application built with React, TypeScript, Vite, Redux Toolkit, Ant Design, and react-hook-form. Supports internationalization (i18n), RTL layout, high-contrast mode, and OpenAI-powered text generation.
 
-Currently, two official plugins are available:
+## How to Run the Project
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+1. **Install dependencies:**
+   ```bash
+   pnpm install
+   # or
+   npm install
+   ```
 
-## React Compiler
+2. **Start the development server:**
+   ```bash
+   pnpm dev
+   # or
+   npm run dev
+   ```
+   The app will be available at [http://localhost:5173/](http://localhost:5173/).
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Setting Up the OpenAI API Key
 
-## Expanding the ESLint configuration
+Some features (e.g., HelpMeWriteButton) require an OpenAI API key.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+1. Create a `.env` file in the project root:
+   ```env
+   VITE_OPENAI_API_KEY=your_openai_api_key_here
+   ```
+2. Restart the dev server after setting/changing the key.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Architecture & Decisions
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+- **Monorepo Structure:** All source code is under `src/`.
+- **State Management:** Uses Redux Toolkit (`formSlice.ts`) for form data and navigation.
+- **Form Logic:** All form steps share a single `FormProvider` context (react-hook-form) via `FormWizard.tsx`. Step components (`PersonalInfoForm`, `FamilyInfoForm`, `SituationForm`) use `useFormContext` for shared state and validation.
+- **Validation:** Zod schemas in `utils/validation.ts` ensure robust validation for each step.
+- **UI Library:** Ant Design is used for layout, form controls, and theming.
+- **Internationalization:** Uses `react-i18next` for multi-language support. RTL and "Almarai" font are applied automatically for Arabic.
+- **Accessibility:** High-contrast mode toggle is available in the header.
+- **OpenAI Integration:** The `HelpMeWriteButton` uses OpenAI API for text generation in the Situation step.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## Improvements & Comments
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+- **Centralized Form State:** Refactored to use a single form context for all steps, improving data flow and validation.
+- **Error Handling:** Error boundaries and Ant Design feedback components are used for robust error handling.
+- **Modular Components:** Header, Footer, Logo, LanguageSwitcher, and ModeSwitcher are separated for maintainability.
+- **RTL & Font:** RTL direction and "Almarai" font are automatically applied for Arabic.
+- **Extensibility:** Easily add new steps or fields by updating the steps array and validation schemas.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+---
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+For more details, see comments in source files such as `FormWizard.tsx`, `formSlice.ts`, and each form step component.
