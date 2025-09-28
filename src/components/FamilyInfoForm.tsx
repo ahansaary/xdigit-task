@@ -18,7 +18,7 @@ export default function FamilyInfoForm() {
   const {t} = useTranslation()
 
   const defaultValues = useAppSelector(
-    state => state.form.data.familyInfo
+    state => state.form?.data?.familyInfo
   ) as FormValues
 
   const {

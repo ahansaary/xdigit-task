@@ -19,7 +19,7 @@ export default function PersonalInfoForm() {
   const {t} = useTranslation()
 
   const defaultValues = useAppSelector(
-    state => state.form.data.personalInfo
+    state => state.form?.data?.personalInfo
   ) as FormValues
 
   const {

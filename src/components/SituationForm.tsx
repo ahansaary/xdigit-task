@@ -1,5 +1,5 @@
 import {zodResolver} from '@hookform/resolvers/zod'
-import {Form, Input, Spin, message, Modal, Button} from 'antd'
+import {Button, Form, Input, message, Modal, Spin} from 'antd'
 import {useState} from 'react'
 import {useForm} from 'react-hook-form'
 import {useTranslation} from 'react-i18next'
@@ -25,7 +25,7 @@ export default function SituationForm() {
   const [editValue, setEditValue] = useState<string>('')
 
   const defaultValues = useAppSelector(
-    state => state.form.data.situation
+    state => state.form?.data?.situation
   ) as FormValues
 
   const {
@@ -166,8 +166,7 @@ export default function SituationForm() {
           <Button key="discard" danger onClick={handleDiscard}>
             {t('buttons.discard', 'Discard')}
           </Button>
-        ]}
-      >
+        ]}>
         <Input.TextArea
           value={editValue}
           onChange={e => setEditValue(e.target.value)}

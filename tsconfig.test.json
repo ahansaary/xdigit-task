@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "module": "CommonJS",
+    "jsx": "react-jsx",
+    "types": ["jest", "vite/client"],
+    "skipLibCheck": true,
+    "moduleResolution": "node",
+    "noEmit": true,
+    "strict": true,
+    "esModuleInterop": true,
+    "verbatimModuleSyntax": false,
+    "resolveJsonModule": true
+  },
+  "include": ["src"]
+}
