@@ -10,7 +10,7 @@ export const personalInfoSchema = z.object({
   state: z.string(),
   country: z.string(),
   phoneNumber: z.string(),
-  email: z.string().email()
+  email: z.email()
 })
 
 export const familyInfoSchema = z.object({

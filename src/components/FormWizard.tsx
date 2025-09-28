@@ -1,4 +1,4 @@
-import {Card} from 'antd'
+import {Card, Divider} from 'antd'
 import {useTranslation} from 'react-i18next'
 import useSteps from '../hooks/steps'
 import ErrorBoundary from './ErrorBoundary'
@@ -18,6 +18,7 @@ export default function FormWizard() {
       <div className="w-full flex justify-center py-8">
         <Card>
           <ProgressBar />
+          <Divider />
           <div className="my-6">
             {currentStep ? currentStep.content : <div>Step not found.</div>}
           </div>

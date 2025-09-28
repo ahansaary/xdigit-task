@@ -1,5 +1,5 @@
 import {zodResolver} from '@hookform/resolvers/zod'
-import {Form, Input, Spin, message} from 'antd'
+import {Form, Input, Spin, message, Modal, Button} from 'antd'
 import {useState} from 'react'
 import {useForm} from 'react-hook-form'
 import {useTranslation} from 'react-i18next'
@@ -19,6 +19,10 @@ export default function SituationForm() {
   const {t} = useTranslation()
   const [loadingField, setLoadingField] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
+  const [suggestion, setSuggestion] = useState<string>('')
+  const [modalOpen, setModalOpen] = useState<boolean>(false)
+  const [modalField, setModalField] = useState<keyof FormValues | null>(null)
+  const [editValue, setEditValue] = useState<string>('')
 
   const defaultValues = useAppSelector(
     state => state.form.data.situation
@@ -50,13 +54,31 @@ export default function SituationForm() {
     setError(null)
     try {
       const prompt = watch(field)
-      const suggestion = await generateSituationText(prompt)
-      setValue(field, suggestion)
-    } catch (err) {
-      setError(t('messages.gptError'))
+      const suggestionText = await generateSituationText(prompt)
+      setSuggestion(suggestionText)
+      setEditValue(suggestionText)
+      setModalField(field)
+      setModalOpen(true)
+    } catch (err: any) {
+      setError(err.message || t('messages.gptError'))
     } finally {
       setLoadingField(null)
     }
+  }
+
+  const handleAccept = () => {
+    if (modalField) {
+      setValue(modalField, editValue)
+      setModalOpen(false)
+      setSuggestion('')
+      setModalField(null)
+    }
+  }
+
+  const handleDiscard = () => {
+    setModalOpen(false)
+    setSuggestion('')
+    setModalField(null)
   }
 
   return (
@@ -130,6 +152,28 @@ export default function SituationForm() {
           <StepsNavigator />
         </Form.Item>
       </Form>
+      <Modal
+        open={modalOpen}
+        title={t('buttons.helpMeWrite')}
+        onCancel={handleDiscard}
+        footer={[
+          <Button key="accept" type="primary" onClick={handleAccept}>
+            {t('buttons.accept', 'Accept')}
+          </Button>,
+          <Button key="edit" onClick={() => setEditValue(editValue)}>
+            {t('buttons.edit', 'Edit')}
+          </Button>,
+          <Button key="discard" danger onClick={handleDiscard}>
+            {t('buttons.discard', 'Discard')}
+          </Button>
+        ]}
+      >
+        <Input.TextArea
+          value={editValue}
+          onChange={e => setEditValue(e.target.value)}
+          rows={5}
+        />
+      </Modal>
     </ErrorBoundary>
   )
 }

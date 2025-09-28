@@ -5,7 +5,7 @@ import SituationForm from '../components/SituationForm'
 import {useAppSelector} from '../store'
 
 export default function useSteps() {
-  const current = useAppSelector(state => state.form.step) as number
+  const current = (useAppSelector(state => state.form.step) as number) || 0
   const {t} = useTranslation()
 
   const steps = [
